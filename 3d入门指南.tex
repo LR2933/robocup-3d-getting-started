@@ -1,217 +1,94 @@
-\documentclass[11pt, a4paper]{ctexart}
+\documentclass[11pt, UTF8, a4paper]{ctexart} % 如果内容很多，可以改为 ctexrep
 
-% --- 宏包加载 ---
-\usepackage[utf8]{inputenc}
-\usepackage{geometry} % 页边距设置
-\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
-\usepackage[table]{xcolor} % 颜色支持
-\usepackage{titlesec} % 标题格式定制
-\usepackage{tcolorbox} % 美观的边框盒
-\usepackage{tabularx} % 自动列宽表格
-\usepackage{booktabs} % 三线表
-\usepackage{enumitem} % 列表定制
-\usepackage{hyperref} % 超链接
-\usepackage{fontawesome5} % 图标支持
+% ==================== 宏包引入 ====================
+\usepackage[margin=2.5cm]{geometry} % 页面边距
+\usepackage{graphicx} % 插入图片
+\usepackage{amsmath, amssymb} % 数学公式（运动学、PID计算必备）
+\usepackage{hyperref} % 超链接与书签
+\usepackage{xcolor} % 颜色支持
+\usepackage{listings} % 代码块排版
+\usepackage[most]{tcolorbox} % 提示框（用于写“踩坑提示”）
 
-% --- 配色定义 ---
-\definecolor{mainblue}{RGB}{0, 102, 204}
-\definecolor{softblue}{RGB}{235, 245, 255}
-\definecolor{darkgrey}{RGB}{50, 50, 50}
-
-% --- 样式设置 ---
+% ==================== 样式设置 ====================
+% 超链接样式
 \hypersetup{
     colorlinks=true,
-    linkcolor=mainblue,
-    urlcolor=mainblue,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={RoboCup 3D 仿真组入门指南},
 }
 
-% 标题样式
-\titleformat{\section}{\Large\bfseries\color{mainblue}}{\thesection}{1em}{}
-\titleformat{\subsection}{\large\bfseries\color{darkgrey}}{\thesubsection}{1em}{}
-
-% 现代代码/终端框样式
-\newtcolorbox{mycode}[1][]{
-    colback=gray!10,
-    colframe=gray!30,
-    boxrule=0.5pt,
-    arc=4pt,
-    fontupper=\small\ttfamily,
-    title=#1,
-    coltitle=black,
-    attach title to upper,
-    after title={\par\smallskip}
+% 代码块样式设置 (适合 C++ 和 Bash 命令)
+\lstset{
+    backgroundcolor=\color{gray!10},   
+    commentstyle=\color{green!50!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
 }
 
-% 引用/注释框样式
-\newtcolorbox{quoteit}{
-    colback=softblue,
-    colframe=mainblue,
-    boxrule=0pt,
-    leftrule=3pt,
-    arc=0pt,
-    fontupper=\itshape
+% 自定义提示框 (用于避坑指南)
+\newtcolorbox{tipbox}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=💡 提示/避坑: #1
 }
 
-% --- 文档信息 ---
-\title{\Huge \textbf{RoboCup 3D 组入门指南}}
-\author{3D 组技术团队}
+% ==================== 文档信息 ====================
+\title{\textbf{RoboCup 3D 仿真组入门指南}}
+\author{你的名字/团队名}
 \date{\today}
 
+% ==================== 正文开始 ====================
 \begin{document}
 
 \maketitle
-\tableofcontents
+\tableofcontents % 生成目录
 \newpage
 
-\section{第一步：实现 Linux 环境}
+\section{简介}
+欢迎来到 RoboCup 3D 仿真组！本指南旨在帮助新手快速搭建环境并开发出自己的第一个上场智能体。
 
-实现 Linux 环境有三种方式：虚拟机、WSL2 和双系统。
+\section{环境搭建}
+在运行比赛之前，我们需要安装 \texttt{rcssserver3d} 和相应的依赖。
 
-\begin{table}[htbp]
-    \centering
-    \caption{环境实现方式对比}
-    \small
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabularx}{\textwidth}{lXXX}
-        \toprule
-        \rowcolor{softblue} \textbf{特征 (Feature)} & \textbf{虚拟机 (VM)} & \textbf{WSL2} & \textbf{双系统 (Dual Boot)} \\
-        \midrule
-        性能体验 & 较差，资源开销大 & 接近原生，CPU/内存效率高 & 完美，100\% 原生硬件性能 \\
-        显卡/GPU 支持 & 极难配置，性能极差 & 支持 CUDA，但有虚拟化损耗 & 原生支持，完美释放 GPU 算力 \\
-        系统隔离度 & 完全隔离，最安全 & 与 Windows 高度融合 & 完全独立，互不干扰 \\
-        切换便利性 & 窗口化运行，极方便 & 终端秒开，极方便 & 必须重启电脑才能切换 \\
-        适合人群 & 偶尔体验、测试轻量软件 & Windows 核心用户，兼顾普通开发 & 硬核开发者、Linux 主力用户、AI/机器人研究者 \\
-        \bottomrule
-    \end{tabularx}
-\end{table}
+\begin{tipbox}[Ubuntu 版本选择]
+强烈推荐使用 Ubuntu 20.04 或 22.04。在虚拟机中运行 Server 可能会因为 OpenGL 支持不足导致监视器 (Monitor) 崩溃，建议双系统开发。
+\end{tipbox}
 
-我们 3D 组推荐使用\textbf{双系统}，因为经过我们的测试，在虚拟机和 WSL2 上运行服务器都会很卡顿。
+\subsection{安装依赖}
+以下是安装基础依赖的命令：
+\begin{lstlisting}[language=bash]
+sudo apt-get update
+sudo apt-get install build-essential cmake libboost-all-dev
+\end{lstlisting}
 
-\subsection{什么是双系统？}
-\begin{quoteit}
-简单来说，双系统 (Dual Boot) 就像是把你的电脑变成了一栋“双拼别墅”，里面住着两个完全独立的系统（比如 Windows 和 Linux）。平时它们互不打通、互不干扰。每次你按下电脑开机键的那一秒，屏幕上会出现一个“二选一”的菜单。你点 Windows，电脑就是一台完美的娱乐办公机；你重启电脑点 Linux，它就瞬间变身成一个纯净、高效的开发者专座。
+\section{智能体底层架构}
+RoboCup 3D 的智能体主要通过 TCP 协议与 Server 通信。以 UTAustinVilla 代码库为例，其核心分为 \textbf{感知(Sense)} 和 \textbf{行动(Act)}。
 
-\textbf{一句话概括：}“一机两用，开机选系统，互不包庇，各自拥有 100\% 的电脑硬件实力。”（AI 生成）
-\end{quoteit}
+\subsection{逆运动学 (Inverse Kinematics)}
+为了让 Nao 机器人走路，我们需要计算关节角度。以下是计算目标末端执行器位置的基础公式：
+\begin{equation}
+    T_e = \prod_{i=1}^{n} A_i(\theta_i)
+\end{equation}
+其中 $\theta_i$ 是第 $i$ 个关节的角度。
 
-\subsection{怎么装双系统？}
-首先要选择 Linux 发行版，就像你买安卓机还要选择买三星还是小米还是 vivo（我选择三星）。Linux 发行版成千上万，可以自行搜索并挑选自己喜欢的发行版，这里介绍几个主流的并且我们团队有使用过的发行版：
-
-\begin{itemize}[label=\faLinux]
-    \item \textbf{Ubuntu}: 最流行、生态最好、遇到问题最容易找到答案的发行版。比赛官方的发行版，比赛时服务器和我们的代码都是在 Ubuntu 上运行的。
-    \item \textbf{Deepin}: 国产，颜值高，使用简单，内置中文输入法，使用起来类似手机，简单上手。比较推荐。
-    \item \textbf{Popos}: 这是我目前一直在使用的系统，它基于 Ubuntu，自带现代的桌面环境，（几乎）开箱即用，我很喜欢用它自带的工作区和自动平铺功能。
-\end{itemize}
-
-选择好要装的双系统后，可以在它官网查看安装方式。例如 Deepin 的官方安装教程在 \url{https://www.deepin.org/zh/deepin-25-installation/}。
-
-\begin{tcolorbox}[colback=orange!5, colframe=orange, title=\faExclamationTriangle\ 警示]
-注意提前备份电脑里重要的文件，以免误操作导致重要内容丢失（例如装 Popos 的时候会让你选全盘安装还是双系统，如果选全盘安装，那电脑里的东西全都没了。）
-\end{tcolorbox}
-
-\section{第二步：学习如何使用 Linux}
-
-首先恭喜进入第二步。使用 Linux 刚开始可能会让您感到困惑，但是随着进一步学习，您可能会爱上 Linux。虽然大部分的发行版都有图形化界面，但是我推荐大家多使用终端里的 Shell。
-
-\subsection{什么是 Shell？}
-\begin{quoteit}
-“如今的计算机有多种接收命令的方式：华丽的图形界面、语音输入、AR/VR，以及近期兴起的大语言模型。这些方式在 80\% 的场景下都很好用，但它们有一个根本性的局限——你无法点击一个不存在的按钮，也无法发出一条未被编程的语音指令。要充分利用计算机的所有工具，我们需要「复古」一下，回到一个古老而强大的文本界面：Shell。”
-——《The Missing Semester of Your CS Education》
-\end{quoteit}
-
-\subsection{如何使用 Shell 以及更多关于 Shell 的内容？}
-我在这里三言两语也讲不清楚，况且我也没那个实力，所以我推荐大家前往：\url{https://missing-semester-cn.github.io/2026/course-shell/}。这里有详细的文字和视频教程，还有众多丰富的课后练习。
-
-\section{第三步：学习使用 Git}
-
-\subsection{Git 有什么用？}
-有了 Git 以后，你再也不用担心把代码改坏了。你可以像游戏一样拥有\textbf{存档点}，可以随时回到任意一个存档。搭配 GitHub，你可以把你的代码上传到远程仓库，实现队伍里的协同合作。因为 Git 不仅可以创建存档，还可以创建\textbf{平行世界}：你在你的平行世界里修改代码不会影响你队友的代码，当代码确定无误了之后，可以把你的平行世界里的代码同步到主世界里。
-
-刚开始学习 Git 可能会觉得很难，很不理解，这是正常的，上手了之后就离不开它了。这里推荐一个工具 \textbf{lazygit}，可以大大降低上手难度（\url{https://github.com/jesseduffield/lazygit}）。我天天用 lazygit，如果不会安装或者不会使用，可以来问我。
-
-\paragraph{关于 Git 的教程：}
+\section{常见问题 (FAQ)}
 \begin{itemize}
-    \item Missing Semester: \url{https://missing-semester-cn.github.io/2020/version-control/}
-    \item Git Book: \url{https://git-scm.com/book/zh/v2}
-    \item Git 学习游戏: \url{https://learngitbranching.js.org/}
+    \item \textbf{智能体连不上服务器？} 检查是否修改了 \texttt{rcssserver3d} 默认的 3100 端口。
+    \item \textbf{机器人一直摔倒？} 检查 ZMP (零力矩点) 的计算是否在支撑多边形内。
 \end{itemize}
-
-\section{第四步：学习 Python 和面向对象编程 (OOP)}
-
-\subsection{什么是面向对象编程？}
-\textbf{\faGamepad\ 经典比喻：上帝视角的设计师}
-
-想象一下，你现在是《王者荣耀》或《英雄联盟》的游戏设计师。你要在游戏里创造几百个不同的英雄和怪物，你会怎么写代码？
-
-\begin{itemize}
-    \item \textbf{\color{red}❌ 传统的“面向过程”做法 (流水线说明书)}：你会写一个无比巨大的文件，里面塞满了各种动作：如果按了 Q 键就计算伤害，如果中箭就扣血……后果是代码会变成“意大利面条”，改动一处，整个游戏都会崩溃。
-    \item \textbf{\color{green}✅ 面向对象 (OOP) 的做法 (捏手办、造造物)}：你直接在计算机里制造“对象 (Object)”。比如设计\textbf{“亚瑟”}，这个实体打包了：
-    \begin{enumerate}
-        \item \textbf{特征 (属性 Property)}：名字亚瑟、血量 3000、攻击 150。
-        \item \textbf{功能 (方法 Method)}：会“跑”、会“大招”、能“回血”。
-    \end{enumerate}
-\end{itemize}
-
-\subsection{OOP 的四大核心（江湖四大高手）}
-\begin{enumerate}
-    \item \textbf{封装 (Encapsulation)}：每个英雄的属性私有。别的英雄不能直接改亚瑟的血，必须通过亚瑟受损的“方法”扣血。
-    \item \textbf{继承 (Inheritance)}：先写“基础小兵”，红/蓝小兵继承它，自动拥有移动和掉钱功能，只需写各自不同的地方。
-    \item \textbf{多态 (Polymorphism)}：同样是“释放技能”指令，亚瑟是“提盾”，后羿是“射箭”。
-    \item \textbf{抽象 (Abstraction)}：只关心血量和技能，不关心他穿几号鞋。
-\end{enumerate}
-
-\subsection{推荐课程}
-\textbf{CS 61A}: 全称 "Structure and Interpretation of Computer Programs"，是加州大学伯克利分校 (UC Berkeley) 最受赞誉的零基础入门神课。
-
-我学的就是这门课，如果有疑问可以问我。
-\begin{itemize}
-    \item 官网：\url{https://cs61a.org/}
-    \item 归档版（无需校方账号）：\url{https://insideempire.github.io/CS61A-Website-Archive/}
-\end{itemize}
-
-\section{第五步：终于可以开始我们的项目了}
-
-我们的服务器是 \texttt{rcssservermj} (\url{https://gitlab.com/robocup-sim/rcssserverm})。\\
-我们用的底层是 \texttt{BahiaRT-MujOCo-base} (\url{https://gitlab.com/bahiart/BahiaRT-MujOCo-basej})。
-
-\subsection{安装必要工具}
-在开始之前，我们要先安装两个工具 —— \texttt{pipx} 和 \texttt{uv}。
-
-\begin{itemize}
-    \item \textbf{pipx}: 专门用来管理和安装 Python 命令行应用的工具。
-    \begin{mycode}
-    sudo apt install pipx
-    \end{mycode}
-    \item \textbf{uv}: Python 领域的“全家桶”级包管理工具，用于创建和管理隔离的虚拟环境。
-    \begin{mycode}
-    curl -LsSf https://astral.sh/uv/install.sh | sh
-    \end{mycode}
-\end{itemize}
-
-\subsection{正式安装项目}
-\begin{enumerate}
-    \item \textbf{安装服务器}
-    \begin{mycode}
-    pipx install rcsssmj
-    \end{mycode}
-    启动方式是在终端输入 \texttt{rcssservermj}。
-
-    \item \textbf{拉取底层代码}
-    \begin{mycode}
-    git clone https://gitlab.com/bahiart/BahiaRT-MujOCo-base.git
-    \end{mycode}
-
-    \item \textbf{安装依赖}
-    进入文件夹，确保有 \texttt{pyproject.toml} 文件，运行：
-    \begin{mycode}
-    uv sync
-    \end{mycode}
-
-    \item \textbf{启动项目}
-    首先启动服务器，然后通过 \texttt{start.sh} 脚本启动球队：
-    \begin{mycode}
-    ./start.sh
-    \end{mycode}
-\end{enumerate}
 
 \end{document}
