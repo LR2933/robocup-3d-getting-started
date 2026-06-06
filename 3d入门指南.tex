@@ -4,6 +4,7 @@
 % 宏包引入
 \usepackage[margin=2.5cm]{geometry} % 页面边距
 \usepackage{graphicx} % 插入图片
+\graphicspath{{images/}}
 \usepackage{amsmath, amssymb} % 数学公式（运动学、PID计算必备）
 \usepackage{hyperref} % 超链接与书签
 \usepackage[table]{xcolor} % 颜色支持
@@ -58,7 +59,7 @@
 }
 
 % 文档信息
-\title{\textbf{RoboCup 3D 仿真组入门指南}}
+\title{\textbf{RoboCup 3D 仿真入门指南}}
 \author{安徽理工大学 RoboCup 实验室}
 \date{\today}
 
@@ -139,6 +140,13 @@
 简单来说，双系统就像是把你的电脑变成了一栋“双拼别墅”，里面住着两个完全独立的系统（比如 Windows 和 Linux）。
 平时它们互不打通、互不干扰。每次你按下电脑开机键的那一秒，屏幕上会出现一个“二选一”的菜单。你点 Windows，电脑就是一台完美的娱乐办公机；你重启电脑点 Linux，它就瞬间变身成一个纯净、高效的开发者专座。
 一句话概括：“一机两用，开机选系统，互不包庇，各自拥有 100 \% 的电脑硬件实力。” \textcolor{gray}{(ai生成)}
+\begin{figure}[htbp]
+    \centering % 让图片居中
+    % 插入图片，宽度设为页面文本宽度的 80% (0.8)
+    \includegraphics[width=0.5\textwidth]{boot-menu.jpg} 
+    
+    \caption{系统选择界面，以我的联想拯救者为例，开机狂按F12就可以进入系统选择界面} % 图片底部的标题
+\end{figure}
 
 \subsection{怎么装双系统？}
 首先要选择linux发行版，就像你买安卓机还要选择买三星还是小米还是vivo
