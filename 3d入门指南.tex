@@ -61,6 +61,14 @@
 \author{你的名字/团队名}
 \date{\today}
 
+% 页眉页脚设置
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % 清空所有默认的页眉页脚设置
+% 只设置页脚中央为页码，页眉保持空白
+\cfoot{\thepage} 
+% 移除页眉那条横线 (Remove the header rule line)
+\renewcommand{\headrulewidth}{0pt}
 
 % ============================正文开始==============================================
 \begin{document}
