@@ -139,28 +139,26 @@ linux发行版成千上万，可以自行搜索并挑选自己喜欢的发行版
 
 不同发行版的安装方式大同小异。注意提前备份电脑里重要的文件，以免误操作导致重要内容丢失（例如装popos的时候会让你选全盘安装还是双系统，如果选全盘安装，那电脑里的东西全都没了。）
 
+\section{学习如何使用linux}
+首先恭喜进入第二部分。
 
-\subsection{安装依赖}
-以下是安装基础依赖的命令：
-\begin{lstlisting}[language=bash]
-sudo apt-get update
-sudo apt-get install build-essential cmake libboost-all-dev
-\end{lstlisting}
+使用linux刚开始可能会让您感到困惑，但是随着进一步学习，您可能会爱上linux。
 
-\section{智能体底层架构}
-RoboCup 3D 的智能体主要通过 TCP 协议与 Server 通信。以 UTAustinVilla 代码库为例，其核心分为 \textbf{感知(Sense)} 和 \textbf{行动(Act)}。
+虽然大部分的发行版都有图形化界面，但是我推荐大家多使用终端里的shell。
 
-\subsection{逆运动学 (Inverse Kinematics)}
-为了让 Nao 机器人走路，我们需要计算关节角度。以下是计算目标末端执行器位置的基础公式：
-\begin{equation}
-    T_e = \prod_{i=1}^{n} A_i(\theta_i)
-\end{equation}
-其中 $\theta_i$ 是第 $i$ 个关节的角度。
+\subsection{什么是shell？}
+“如今的计算机有多种接收命令的方式：华丽的图形界面、语音输入、AR/VR，以及近期兴起的大语言模型。这些方式在 80 \% 的场景下都很好用，但它们有一个根本性的局限——你无法点击一个不存在的按钮，也无法发出一条未被编程的语音指令。要充分利用计算机的所有工具，我们需要「复古」一下，回到一个古老而强大的文本界面：Shell。"
 
-\section{常见问题 (FAQ)}
+\subsection{如何使用shell以及更多关于shell的内容？}
+我在这里三言两语也讲不清楚，况且我也没那个实力
+
+所以我推荐大家前往麻省理工学院开设的课程《The Missing Semester of Your CS Education》里关于shell的章节进一步学习
+
 \begin{itemize}
-    \item \textbf{智能体连不上服务器？} 检查是否修改了 \texttt{rcssserver3d} 默认的 3100 端口。
-    \item \textbf{机器人一直摔倒？} 检查 ZMP (零力矩点) 的计算是否在支撑多边形内。
+    \item 官方网址: \url{https://missing.csail.mit.edu/}
+    \item 中文版网址: \url{https://missing-semester-cn.github.io/}
 \end{itemize}
+
+课程里包含详细的文字和视频教程，还有丰富的课后作业
 
 \end{document}
