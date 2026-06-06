@@ -1,7 +1,7 @@
 % !TEX program = xelatex
 \documentclass[11pt, UTF8, a4paper]{ctexart} % 如果内容很多，可以改为 ctexrep
 
-% ==================== 宏包引入 ====================
+% 宏包引入
 \usepackage[margin=2.5cm]{geometry} % 页面边距
 \usepackage{graphicx} % 插入图片
 \usepackage{amsmath, amssymb} % 数学公式（运动学、PID计算必备）
@@ -14,7 +14,7 @@
 \usepackage{booktabs}
 \usepackage{twemojis}
 
-% ==================== 样式设置 ====================
+% 样式设置
 % 超链接样式
 \hypersetup{
     colorlinks=true,
@@ -51,12 +51,13 @@
     title=💡 提示/避坑: #1
 }
 
-% ==================== 文档信息 ====================
+% 文档信息
 \title{\textbf{RoboCup 3D 仿真组入门指南}}
 \author{你的名字/团队名}
 \date{\today}
 
-% ==================== 正文开始 ====================
+
+% ============================正文开始==============================================
 \begin{document}
 
 \maketitle
@@ -66,7 +67,7 @@
 \section{实现linux环境}
 实现linux环境有三种方式虚拟机、WSL2和双系统。
 
-% ================= linux环境区别表格 =================
+% -------------------- linux环境区别表格--------------------------
 \begin{table}[htbp]
     \centering
     
@@ -113,6 +114,7 @@
         \texttt{双系统} & 完美，100\% 原生硬件性能 & 原生支持，完美释放 GPU 算力 & 完全独立，互不干扰 & 必须重启电脑才能切换 & 硬核开发者、Linux 主力用户 \\
     \end{tcolorbox}
 \end{table}
+% -----------------------------------------------------------------------------------------------------
 
 \section{环境搭建}
 在运行比赛之前，我们需要安装 \texttt{rcssserver3d} 和相应的依赖。
