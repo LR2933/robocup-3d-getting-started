@@ -63,8 +63,56 @@
 \tableofcontents % 生成目录
 \newpage
 
-\section{简介}
-欢迎来到 RoboCup 3D 仿真组！本指南旨在帮助新手快速搭建环境并开发出自己的第一个上场智能体。
+\section{实现linux环境}
+实现linux环境有三种方式虚拟机、WSL2和双系统。
+
+% ================= linux环境区别表格 =================
+\begin{table}[htbp]
+    \centering
+    
+    % 定义颜色 (Color Definitions)
+    \definecolor{tableheader}{RGB}{52, 73, 94}
+    
+    % 修复：调整行高缩放的正确语法
+    \renewcommand{\arraystretch}{1.4} 
+    
+    % 2. 夹心层：圆角盒子 (tcolorbox config)
+    \begin{tcolorbox}[
+        enhanced,
+        width=\textwidth,                       
+        % 修复核心：使用 >{\raggedright\arraybackslash}X 让文字靠左对齐，取消两端对齐的硬拉伸
+        tabularx={
+            >{\raggedright\arraybackslash}X | 
+            >{\raggedright\arraybackslash}X | 
+            >{\raggedright\arraybackslash}X | 
+            >{\raggedright\arraybackslash}X | 
+            >{\raggedright\arraybackslash}X | 
+            >{\raggedright\arraybackslash}X
+        },
+        arc=8pt,                                
+        boxrule=0.1pt,                            
+        colback=white,
+        colframe=tableheader,
+        clip upper,                             
+        boxsep=0pt, left=0pt, right=0pt, top=0pt, bottom=0pt 
+    ]
+        % 3. 内层：直接写表格的数据内容
+        \rowcolor{tableheader} 
+        % 表头建议保持居中对齐，所以这里局部加上 \centering
+        \multicolumn{1}{c|}{\textbf{\color{white}实现方式}} & 
+        \multicolumn{1}{c|}{\textbf{\color{white}性能体验}} & 
+        \multicolumn{1}{c|}{\textbf{\color{white}显卡/GPU 支持}} & 
+        \multicolumn{1}{c|}{\textbf{\color{white}系统隔离度}} & 
+        \multicolumn{1}{c|}{\textbf{\color{white}切换便利性}} & 
+        \multicolumn{1}{c}{\textbf{\color{white}适合人群}} \\ \hline
+        
+        \texttt{虚拟机} & 较差，资源开销大 & 极难配置，性能极差 & 完全隔离，最安全 & 窗口化运行，极方便 & 偶尔体验、测试轻量软件 \\ \hline
+        
+        \texttt{WSL2} & 接近原生，CPU/内存效率高 & 支持 CUDA，但有虚拟化损耗 & 与 Windows 高度融合 & 终端秒开，极方便 & Windows 用户，兼顾普通开发 \\ \hline
+        
+        \texttt{双系统} & 完美，100\% 原生硬件性能 & 原生支持，完美释放 GPU 算力 & 完全独立，互不干扰 & 必须重启电脑才能切换 & 硬核开发者、Linux 主力用户 \\
+    \end{tcolorbox}
+\end{table}
 
 \section{环境搭建}
 在运行比赛之前，我们需要安装 \texttt{rcssserver3d} 和相应的依赖。
