@@ -308,6 +308,15 @@ rcssservermj
 git clone https://gitlab.com/bahiart/BahiaRT-MujOCo-base.git
 \end{lstlisting}
 
+\begin{figure}[htbp]
+    \centering % 让图片居中
+    % 插入图片，宽度设为页面文本宽度的 80% (0.8)
+    \includegraphics[width=1\textwidth]{base-code.png} 
+    
+    \caption{当前目录下出现了BahiaRT-MujOCo-base 就是拉取成功了} % 图片底部的标题
+\end{figure}
+
+
 \bigbreak
 然后我们需要为底层代码安装依赖
 \smallbreak
@@ -316,9 +325,28 @@ git clone https://gitlab.com/bahiart/BahiaRT-MujOCo-base.git
 uv sync
 \end{lstlisting}
 
+\begin{figure}[htbp]
+    \centering % 让图片居中
+    % 插入图片，宽度设为页面文本宽度的 80% (0.8)
+    \includegraphics[width=0.8\textwidth]{uv-sync.png} 
+    
+    \caption{uv} % 图片底部的标题
+\end{figure}
+
+\newpage
+
 等待依赖安装完成后，确保服务器已经启动，在当前路径下运行以下命令即可启动底层代码
 \begin{lstlisting}[language=bash]
 uv run ./start.sh
 \end{lstlisting}
+
+\begin{figure}[htbp]
+    \centering % 让图片居中
+    % 插入图片，宽度设为页面文本宽度的 80% (0.8)
+    \includegraphics[width=1\textwidth]{start.png} 
+    
+    \caption{启动服务器和启动代码} % 图片底部的标题
+\end{figure}
+
  
 \end{document}
