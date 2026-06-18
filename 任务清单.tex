@@ -1,0 +1,139 @@
+% !TEX program = xelatex
+\documentclass[11pt, UTF8, a4paper]{ctexart} % 如果内容很多，可以改为 ctexrep
+
+% 宏包引入
+\usepackage[margin=2.5cm]{geometry} % 页面边距
+\usepackage{graphicx} % 插入图片
+\graphicspath{{images/}}
+\usepackage{amsmath, amssymb} % 数学公式（运动学、PID计算必备）
+\usepackage{hyperref} % 超链接与书签
+\usepackage[table]{xcolor} % 颜色支持
+\usepackage{listings} % 代码块排版
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox} % 提示框（用于写“踩坑提示”）
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{twemojis}
+\usepackage{listings}
+\usepackage{menukeys}
+\usepackage{float} % 强制图片位置
+
+% 样式设置
+% 超链接样式
+\hypersetup{
+    colorlinks=true,          % 开启链接颜色（去掉难看的方框）
+    urlcolor=black,   % 网页链接的颜色（优雅的深蓝色）
+    linkcolor=black,  % 内部链接（目录、章节）的颜色（黑色）
+}
+
+% 定义代码高亮使用的颜色
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% 设置代码块全局样式
+\lstset{
+    backgroundcolor=\color{backcolour},   % 背景色
+    commentstyle=\color{codegreen},       % 注释颜色
+    keywordstyle=\color{blue}\bfseries,   % 关键字颜色与加粗
+    numberstyle=\tiny\color{codegray},    % 行号样式
+    stringstyle=\color{codepurple},       % 字符串颜色
+    basicstyle=\ttfamily\small,           % 基础字体（等宽小号）
+    breakatwhitespace=false,         
+    breaklines=true,                      % 自动折行（防止代码过长超出边界）
+    captionpos=b,                         % 标题位置（b代表底部）
+    keepspaces=true,                 
+    numbers=left,                         % 行号显示在左侧
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4                             % Tab 宽度为 4
+}
+
+% 自定义提示框 (用于避坑指南)
+\newtcolorbox{tipbox}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    fonttitle=\bfseries,
+    title=💡 提示/避坑: #1
+}
+
+% 文档信息
+\title{\textbf{3D 组任务清单}}
+\author{安徽理工大学 RoboCup 实验室}
+\date{\today}
+
+% 页眉页脚设置
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % 清空所有默认的页眉页脚设置
+% 只设置页脚中央为页码，页眉保持空白
+\cfoot{\thepage} 
+% 移除页眉那条横线 (Remove the header rule line)
+\renewcommand{\headrulewidth}{0pt}
+
+% ============================正文开始==============================================
+\begin{document}
+
+\maketitle
+
+本入门指南的源码在\url{https://github.com/LR2933/robocup-3d-getting-started}
+
+欢迎star和pr。
+\tableofcontents % 生成目录
+\vspace{5cm} 
+\newpage
+\section{搭建linux系统环境}
+可以选择双系统、WSL2 或者虚拟机。
+\smallbreak
+推荐顺序为 双系统 > WSL2 > 虚拟机。
+\begin{itemize}
+    \item \textbf{考核作业}: 截图或照片，证明你已经成功安装了linux系统环境，并且能够进入系统。对实现方式和linux发行版的选择没有要求。
+    \item \textbf{截止日期}: 2026年6月28日(如果截止日期无法完整，说明一下原因即可，做不完也不要紧，尽力而为就好。下同。)
+\end{itemize}
+\section{搭建项目底层}
+具体见“3D 入门指南”中的“开始我们的项目”部分。
+\begin{itemize}
+    \item \textbf{考核作业}: 成功打开服务器，能够看到机器人上球场的截图或照片。
+    \item \textbf{截止日期}: 2026年7月5日
+\end{itemize}
+\section{开始改项目}
+以下内容较简单，不要用ai修改，可以让ai解释。
+\smallbreak
+建议在开始之前先理解代码的结构和功能，弄清楚每个文件夹和文件的作用。可以先从启动脚本开始看，看它启动了哪些程序，相应的程序又调用了哪些函数，以此类推。
+\smallbreak
+每一步修改都要git提交，并且在提交信息中写清楚修改了什么，为什么修改。
+\smallbreak
+\begin{itemize}
+    \item \textbf{考核作业}: 以下任务的考核作业均为git提交记录和在服务器运行的截图或照片或视频。不需要很详细，能证明你完成了就可以。如果有困难，可以在群里大胆提问。
+    \item \textbf{截止日期}: 开学前
+\end{itemize}
+\subsection{创建球场}
+在/mujococodebase/world/field.py中创建一个球场，尺寸是36 * 55。
+\subsection{写一个新的启动脚本}
+参考start.sh写一个start\_7v7.sh，要求启动七个球员，并把创建的球场传递进去。
+\subsection{设计初始站位}
+在/mujococodebase/decision\_maker.py中给七个球员设计初始站位，不能站在中心圈内。
+\subsection{编写守门员行为}
+让守门员在球门附近防守。
+\subsection{编写不同比赛状态下球员的行为}
+比如敌方开球的时候不要去抢球等，具体看规则，尽量不要犯规。
+\section{其他}
+以下为附加题，有一定难度，可以选择自己感兴趣的方面研究，不做硬性考核。
+\smallbreak
+可以拿26年国赛其他学校队伍的二进制代码和自己的球队踢比赛，以此来发现自己的球队有哪些不足。
+\begin{itemize}
+    \item \textbf{进攻防守策略}:例如离球最近的球员去抢球，其他球员去前方接应，或者去后方防守。
+    \item \textbf{找球行为}:当球员丢失足球位置信息时的找球行为。
+    \item \textbf{球员之间的信息交流}:例如分享球的位置，自己的位置等。
+    \item \textbf{起身动作}:推荐从修改机器人的关键帧入手，也可以通过强化学习训练一个起身模型。
+        \smallbreak 
+        在/mujococodebase/skills/keyframe/get\_up/get\_up\_back.yaml里面有着每个关节每一帧的角度，可以修改这些角度来优化起身动作或者重新设计一个起身动作。
+    \item \textbf{踢球动作}:可以参考起身动作编写关键帧或者通过强化学习训练一个踢球模型。
+    \item \textbf{走路动作}:通过强化学习训练机器人的走路模型，推荐使用booster\_gym。
+\end{itemize}
+
+
+\end{document}
