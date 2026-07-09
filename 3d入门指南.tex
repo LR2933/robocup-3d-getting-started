@@ -268,10 +268,14 @@ git不仅可以创建存档，还可以创建平行世界，你在你的平行�
 \newpage
 
 \section{开始我们的项目}
-终于可以开始我们的项目了
-
-
-但是在开始之前，我们要先安装两个工具: pipx 和 uv
+终于可以开始我们的项目了。
+\smallbreak
+在开始之前，我们先更新一下，确保我们的系统和apt软件包是最新的
+\begin{lstlisting}[language=bash]
+sudo apt update
+sudo apt upgrade -y
+\end{lstlisting}
+然后我们要先安装两个工具: pipx 和 uv
 
 \begin{itemize}
     \item pipx是一个专门用来管理和安装python命令行应用的工具，安装命令如下。
