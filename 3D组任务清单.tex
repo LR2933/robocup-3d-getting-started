@@ -87,6 +87,8 @@
 \newpage
 \section{搭建linux系统环境}
 可以选择双系统、WSL2 或者虚拟机。
+\smallbreak
+推荐顺序为 双系统 > WSL2 > 虚拟机。
 \section{通过ssh链接github}
 如果没有github账号，请先注册一个github账号。
 \subsection{生成ssh key}
@@ -95,17 +97,6 @@
 ssh-keygen -t ed25519 -C "your_email@example.com"
 \end{lstlisting}
 \smallbreak
-推荐顺序为 双系统 > WSL2 > 虚拟机。
-\begin{itemize}
-    \item \textbf{考核作业}: 截图或照片，证明你已经成功安装了linux系统环境，并且能够进入系统。对实现方式和linux发行版的选择没有要求。
-    \item \textbf{截止日期}: 2026年6月28日(如果截止日期无法完整，说明一下原因即可，做不完也不要紧，尽力而为就好。下同。)
-\end{itemize}
-\section{搭建项目底层}
-具体见“3D 入门指南”中的“开始我们的项目”部分。
-\begin{itemize}
-    \item \textbf{考核作业}: 成功打开服务器，能够看到机器人上球场的截图或照片。
-    \item \textbf{截止日期}: 2026年7月5日
-\end{itemize}
 在后面的提示中一路回车即可，生成的ssh key在~/.ssh/id\_ed25519.pub中。
 \subsection{将ssh key添加到github}
 在github中，点击右上角的头像，选择Settings，在左侧选择SSH and GPG keys，点击New SSH key，将~/.ssh/id\_ed25519.pub中的内容复制到Key中，Title可以随便写，最后点击Add SSH key即可。
@@ -133,11 +124,6 @@ git push -u origin main\end{lstlisting}
 建议在开始之前先理解代码的结构和功能，弄清楚每个文件夹和文件的作用。可以先从启动脚本开始看，看它启动了哪些程序，相应的程序又调用了哪些函数，以此类推。
 \smallbreak
 每一步修改都要git提交，并且在提交信息中写清楚修改了什么，为什么修改。
-\smallbreak
-\begin{itemize}
-    \item \textbf{考核作业}: 以下任务的考核作业均为git提交记录和在服务器运行的截图或照片或视频。不需要很详细，能证明你完成了就可以。如果有困难，可以在群里大胆提问。
-    \item \textbf{截止日期}: 开学前
-\end{itemize}
 \subsection{创建球场}
 在/mujococodebase/world/field.py中创建一个球场，尺寸是36 * 55。
 \subsection{写一个新的启动脚本}
