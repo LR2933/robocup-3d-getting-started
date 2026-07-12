@@ -116,6 +116,17 @@ ssh -T git@github.com
 \end{lstlisting}
 \smallbreak
 如果你看到类似 Hi [your-username]! You've successfully authenticated... 的提示，说明配置成功。
+
+\section{推送你的项目到github}
+\subsection{在github创建一个新的仓库}
+在github中，点击右上角的加号，选择New repository，在Repository name下填写仓库名称，选择Public或Private，最后点击Create repository即可。
+\subsection{将本地代码推送到github}
+在终端中进入你的项目目录，把原本的git仓库删除，使用以下命令将本地代码推送到github。注意将your\_username和your\_repository\_name替换为你自己的github用户名和仓库名。
+\begin{lstlisting}[language=bash]
+git remote add origin git@github.com:your_username/your_repository_name.git
+git branch -M main
+git push -u origin main\end{lstlisting}
+
 \section{开始改项目}
 以下内容较简单，不要用ai修改，可以让ai解释。
 \smallbreak
