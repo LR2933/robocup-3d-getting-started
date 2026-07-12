@@ -87,6 +87,13 @@
 \newpage
 \section{搭建linux系统环境}
 可以选择双系统、WSL2 或者虚拟机。
+\section{通过ssh链接github}
+如果没有github账号，请先注册一个github账号。
+\subsection{生成ssh key}
+在终端中输入以下命令，生成ssh key
+\begin{lstlisting}[language=bash]
+ssh-keygen -t ed25519 -C "your_email@example.com"
+\end{lstlisting}
 \smallbreak
 推荐顺序为 双系统 > WSL2 > 虚拟机。
 \begin{itemize}
@@ -99,6 +106,16 @@
     \item \textbf{考核作业}: 成功打开服务器，能够看到机器人上球场的截图或照片。
     \item \textbf{截止日期}: 2026年7月5日
 \end{itemize}
+在后面的提示中一路回车即可，生成的ssh key在~/.ssh/id\_ed25519.pub中。
+\subsection{将ssh key添加到github}
+在github中，点击右上角的头像，选择Settings，在左侧选择SSH and GPG keys，点击New SSH key，将~/.ssh/id\_ed25519.pub中的内容复制到Key中，Title可以随便写，最后点击Add SSH key即可。
+\subsection{测试ssh连接}
+在终端中输入以下命令，测试ssh连接是否成功
+\begin{lstlisting}[language=bash]
+ssh -T git@github.com
+\end{lstlisting}
+\smallbreak
+如果你看到类似 Hi [your-username]! You've successfully authenticated... 的提示，说明配置成功。
 \section{开始改项目}
 以下内容较简单，不要用ai修改，可以让ai解释。
 \smallbreak
