@@ -124,18 +124,20 @@ git push -u origin main\end{lstlisting}
 建议在开始之前先理解代码的结构和功能，弄清楚每个文件夹和文件的作用。可以先从启动脚本开始看，看它启动了哪些程序，相应的程序又调用了哪些函数，以此类推。
 \smallbreak
 每一步修改都要git提交，并且在提交信息中写清楚修改了什么，为什么修改。
-\subsection{创建球场}
-在/mujococodebase/world/field.py中创建一个球场，尺寸是36 * 55。
 \subsection{写一个新的启动脚本}
-参考start.sh写一个start\_7v7.sh，要求启动七个球员，并把创建的球场传递进去。
+参考start.sh写一个start\_7v7.sh，要求启动七个球员。
+\subsection{创建球场}
+在/mujococodebase/world/field.py中创建一个球场类，球场的尺寸是36 * 55。
+\smallbreak
+在启动脚本中，把球场名传递给run\_player.py并在world.py里，处理传递进来的球场名。
 \subsection{设计初始站位}
-在/mujococodebase/decision\_maker.py中给七个球员设计初始站位，不能站在中心圈内。
-\subsection{编写守门员行为}
+在decision\_maker.py中为新球场设计初始站位，注意守门员必须是一号球员。
+\subsection{编写守门员逻辑}
 让守门员在球门附近防守。
 \subsection{编写不同比赛状态下球员的行为}
 比如敌方开球的时候不要去抢球等，具体看规则，尽量不要犯规。
 \section{其他}
-以下为附加题，有一定难度，可以选择自己感兴趣的方面研究，不做硬性考核。
+以下有一定难度，选择自己感兴趣的方面研究。
 \smallbreak
 可以拿26年国赛其他学校队伍的二进制代码和自己的球队踢比赛，以此来发现自己的球队有哪些不足。
 \begin{itemize}
